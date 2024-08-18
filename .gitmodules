@@ -1,0 +1,12 @@
+[submodule "libs/imgui"]
+	path = libs/imgui
+	url = git@github.com:ocornut/imgui.git
+[submodule "libs/linmath"]
+	path = libs/linmath
+	url = git@github.com:datenwolf/linmath.h.git
+[submodule "stb"]
+	path = stb
+	url = https://github.com/nothings/stb
+[submodule "libs/stb"]
+	path = libs/stb
+	url = https://github.com/nothings/stb
