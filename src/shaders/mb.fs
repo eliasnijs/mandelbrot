@@ -1,14 +1,17 @@
 #version 330
 precision highp float;
 
-in  vec2 uv;
+in vec2 uv;
 out vec4 fragColor;
 
 #define ESCAPE_RADIUS 2
 uniform int max_iterations;
 
+uniform float zoom;
+uniform vec2 location;
+
 void main() {
-    vec2 c = uv * 4.0 - vec2(2.5, 2.0);
+    vec2 c = ((uv / zoom) * 4.0) - vec2(2.5 / zoom, 2.0 / zoom)  - location;
     vec2 z = vec2(0.0);
     float iter = 0.0;
 
@@ -26,6 +29,6 @@ void main() {
         fragColor = vec4(0.0, 0.0, 0.0, 1.0);
     } else {
         float t = iter / float(max_iterations);
-        fragColor = vec4(t * t, t * t, t * t * t, 1.0);
+        fragColor = vec4(t, t * t, t * t * t, 1.0);
     }
 }

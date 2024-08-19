@@ -1,3 +1,4 @@
+// TODO(Elias): add keymap support for controller
 
 struct ButtonState {
 	B32 is_down;

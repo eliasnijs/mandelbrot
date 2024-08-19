@@ -111,6 +111,11 @@ shader_set_F32(I32 shader_id, char *name, F32 value) {
 }
 
 internal void
+shader_set_vec2(I32 shader_id, char *name, vec2 v) {
+	glUniform2fv(glGetUniformLocation(shader_id, name), 1, v);
+}
+
+internal void
 shader_set_vec3(I32 shader_id, char *name, vec3 v) {
 	glUniform3fv(glGetUniformLocation(shader_id, name), 1, v);
 }
