@@ -22,6 +22,14 @@
 
 #include "meshes.h"
 
+
+global_variable const char* COLOR_MODES[] = {
+	"Heatmap",
+	"Rainbow",
+	"Greyscale"
+};
+
+
 I32
 main()
 {
@@ -40,8 +48,6 @@ main()
 	stbi_set_flip_vertically_on_load(true);
 
 
-
-
 	Mesh plane = gpu_buffer_mesh(plane_geometry, plane_connectivity, 4, 2);
 
 	U32 mb_sid = 0;
@@ -55,6 +61,7 @@ main()
 	I32 mb_max_iterations = 100;
 	F32 mb_zoom = 1.0f;
 	vec2 mb_location = {0.0f, 0.0f};
+	I32 color_mode = 0;
 
 	vec2 click_location = {0.0f, 0.0f};
 	B32 dragging = false;
@@ -101,6 +108,7 @@ main()
 		shader_set_vec2(mb_sid, "resolution", (vec2){(F32)width, (F32)height});
 		shader_set_I32(mb_sid, "max_iterations", mb_max_iterations);
 		shader_set_F32(mb_sid, "zoom", mb_zoom);
+		shader_set_I32(mb_sid, "color_mode", color_mode);
 		shader_set_vec2(mb_sid, "location", mb_location);
 		glBindVertexArray(plane.vao);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -114,7 +122,13 @@ main()
 		ImGui::End();
 		ImGui::Begin("Controls", 0x0, 0x0);
 		ImGui::InputInt("Max Iterations", &mb_max_iterations);
-		mb_max_iterations = Clamp(1, mb_max_iterations, 1000);
+		color_mode = Clamp(0, color_mode, (I32)(ArrayCount(COLOR_MODES) - 1));
+		mb_max_iterations = Clamp(1, mb_max_iterations, 10000);
+
+		ImGui::Combo("Color Mode", &color_mode, COLOR_MODES,
+			     IM_ARRAYSIZE(COLOR_MODES));
+
+
 		ImGui::End();
 		imgui_end_frame();
 

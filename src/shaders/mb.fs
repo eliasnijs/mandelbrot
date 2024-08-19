@@ -10,6 +10,7 @@ uniform int max_iterations;
 uniform float zoom;
 uniform vec2 location;
 uniform vec2 resolution;
+uniform int color_mode;
 
 vec3 heatmapColor(float t) {
     vec3 color = vec3(0.0);
@@ -30,6 +31,10 @@ vec3 heatmapColor(float t) {
 	color = mix(vec3(1.0, 0.0, 0.0), vec3(0.0, 0.0, 0.0), (t - 0.875) / 0.125);
     }
     return color;
+}
+
+vec3 grayscaleColor(float t) {
+    return vec3(t);
 }
 
 vec3 rainbowColor(float t) {
@@ -85,7 +90,17 @@ void main() {
         fragColor = vec4(0.0, 0.0, 0.0, 1.0);
     } else {
         float t = iter / float(max_iterations);
-	      fragColor = vec4(heatmapColor(t), 1.0);
+	switch (color_mode) {
+	    case 0:
+		fragColor = vec4(heatmapColor(t), 1.0);
+		break;
+	    case 1:
+		fragColor = vec4(rainbowColor(t), 1.0);
+		break;
+	    case 2:
+		fragColor = vec4(grayscaleColor(t), 1.0);
+		break;
+	}
     }
 }
 
