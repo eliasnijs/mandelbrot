@@ -111,8 +111,6 @@ main()
 		ImGui::Begin("Controls", 0x0, 0x0);
 		ImGui::InputInt("Max Iterations", &mb_max_iterations);
 		mb_max_iterations = Clamp(1, mb_max_iterations, 1000);
-		ImGui::InputFloat("Zoom", &mb_zoom);
-		ImGui::SliderFloat2("Location", mb_location, -2.0f, 2.0f);
 		ImGui::End();
 		imgui_end_frame();
 
