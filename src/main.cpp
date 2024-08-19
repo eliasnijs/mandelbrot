@@ -56,6 +56,9 @@ main()
 	F32 mb_zoom = 1.0f;
 	vec2 mb_location = {0.0f, 0.0f};
 
+	vec2 click_location = {0.0f, 0.0f};
+	B32 dragging = false;
+
 
 	F64 dt = 0.0;
 	while (!glfwWindowShouldClose(window)) {
@@ -66,6 +69,30 @@ main()
 		glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		if (button_pressed(&controller.mouse.left)) {
+			click_location[0] = (2.0f * controller.mouse.xpos / 1440.0f) - 1.0f;
+			click_location[1] = 1.0f - (2.0f * controller.mouse.ypos / 840.0f);
+			dragging = true;
+		}
+		if (button_is_down(&controller.mouse.left) && dragging) {
+			vec2 current_location = {0.0f, 0.0f};
+			current_location[0] = (2.0f * controller.mouse.xpos / 1440.0f) - 1.0f;
+			current_location[1] = 1.0f - (2.0f * controller.mouse.ypos / 840.0f);
+			vec2 delta = {0.0f, 0.0f};
+			delta[0] = current_location[0] - click_location[0];
+			delta[1] = current_location[1] - click_location[1];
+			mb_location[0] -= delta[1] * 1/mb_zoom;
+			mb_location[1] -= delta[0] * 1/mb_zoom;
+			click_location[0] = current_location[0];
+			click_location[1] = current_location[1];
+		}
+
+		if (controller.mouse.scroll != 0.0f) {
+			mb_zoom += controller.mouse.scroll * 0.1f * (1.0f + mb_zoom);
+			controller.mouse.scroll = 0.0f;
+		}
+
+		mb_zoom = Clamp(mb_zoom, 0.1f, 100.0f);
 
 		glUseProgram(mb_sid);
 		shader_set_I32(mb_sid, "max_iterations", mb_max_iterations);

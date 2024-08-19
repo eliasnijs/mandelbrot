@@ -12,6 +12,10 @@ struct MouseState {
 	F64 ypos_prev;
 	F64 scroll;
 	F64 scroll_prev;
+
+	ButtonState left;
+	ButtonState right;
+	ButtonState middle;
 };
 
 struct Controller {
@@ -82,6 +86,12 @@ get_input(GLFWwindow* window, Controller *controller)
 	controller->mouse.ypos_prev = controller->mouse.ypos;
 	controller->mouse.xpos = new_xpos;
 	controller->mouse.ypos = new_ypos;
+	update_button_state(&controller->mouse.left,
+			    glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT)
+			    == GLFW_PRESS);
+	update_button_state(&controller->mouse.right,
+			    glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT)
+			    == GLFW_PRESS);
 }
 
 internal B32
