@@ -9,6 +9,7 @@ uniform int max_iterations;
 
 uniform float zoom;
 uniform vec2 location;
+uniform vec2 resolution;
 
 vec3 heatmapColor(float t) {
     vec3 color = vec3(0.0);
@@ -61,7 +62,12 @@ vec3 rainbowColor(float t) {
 
 
 void main() {
+    vec2 uv = uv;
+
+    vec2 aspect = vec2(1.0, resolution.x / resolution.y);
     vec2 c = ((uv / zoom) * 4.0) - vec2(2.5 / zoom, 2.0 / zoom)  - location;
+    c *= aspect;
+
     vec2 z = vec2(0.0);
     float iter = 0.0;
 

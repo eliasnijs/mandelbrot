@@ -94,7 +94,11 @@ main()
 
 		mb_zoom = Clamp(mb_zoom, 0.1f, 100.0f);
 
+		I32 width, height;
+		glfwGetFramebufferSize(window, &width, &height);
+
 		glUseProgram(mb_sid);
+		shader_set_vec2(mb_sid, "resolution", (vec2){(F32)width, (F32)height});
 		shader_set_I32(mb_sid, "max_iterations", mb_max_iterations);
 		shader_set_F32(mb_sid, "zoom", mb_zoom);
 		shader_set_vec2(mb_sid, "location", mb_location);
