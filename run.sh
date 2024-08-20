@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/bin/bash
 
-./build/a.out
-
+cd build/
+google-chrome http://localhost:8000/mandelbrot.html &
+python -m http.server

@@ -5,12 +5,12 @@ ARCHIVE_DIR="archives"
 mkdir -p $ARCHIVE_DIR
 
 IMGUI_DIR="imgui"
-IMGUI_CXX=g++
+IMGUI_CXX=em++
 IMGUI_CXXFLAGS="-Wall -I. -Ibackends"
 IMGUI_SOURCES=("imgui.cpp" "imgui_draw.cpp" "imgui_widgets.cpp" "imgui_tables.cpp" "backends/imgui_impl_glfw.cpp" "backends/imgui_impl_opengl3.cpp")
 
 STB_DIR="stb"
-STB_CXX=g++
+STB_CXX=em++
 STB_CXXFLAGS="-Wall -I."
 STB_SOURCES=("stb_image.cpp")
 
